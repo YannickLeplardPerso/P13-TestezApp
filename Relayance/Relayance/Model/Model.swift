@@ -20,6 +20,12 @@ struct Client: Codable, Hashable {
         case email
         case dateCreationString = "date_creation"
     }
+
+    // pour les tests
+    func getDateCreationString() -> String {
+        return dateCreationString
+    }
+
     
     /// Constructeur
     init(nom: String, email: String, dateCreationString: String) {
