@@ -26,15 +26,12 @@ struct Client: Codable, Hashable {
         return dateCreationString
     }
 
-    
-    /// Constructeur
     init(nom: String, email: String, dateCreationString: String) {
         self.nom = nom
         self.email = email
         self.dateCreationString = dateCreationString
     }
     
-    /// Fonctions
     static func creerNouveauClient(nom: String, email: String) -> Client {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -54,11 +51,13 @@ struct Client: Codable, Hashable {
         return true
     }
     
+    // On considère qu'un client existe s'il a le même email car l'email est généralement unique dans un système CRM
     func clientExiste(clientsList: [Client]) -> Bool {
-        if clientsList.contains(where: { $0 == self }) {
-            return true
-        }
-        return false
+        return clientsList.contains { $0.email.lowercased() == self.email.lowercased() }
+    }
+    // Pour garantir que le Hashable fonctionne correctement avec la comparaison
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(email.lowercased())
     }
     
     func formatDateVersString() -> String {

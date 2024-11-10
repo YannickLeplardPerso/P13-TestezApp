@@ -1,5 +1,5 @@
 //
-//  ClientTests.swift
+//  ModelTests.swift
 //  RelayanceTests
 //
 //  Created by Yannick LEPLARD on 08/11/2024.
@@ -10,7 +10,7 @@ import XCTest
 
 
 
-final class ClientTests: XCTestCase {
+final class ModelTests: XCTestCase {
     
     func testInit() {
         // Given
@@ -108,5 +108,67 @@ final class ClientTests: XCTestCase {
         // Then
         XCTAssertEqual(formattedValidDate, "10-07-2023", "La date formatée ne correspond pas")
 //        XCTAssertEqual(formattedInvalidDate, invalidDateString, "En cas d'échec de conversion, la chaîne originale devrait être retournée")
+    }
+    
+    
+    // YA
+    func test_dateCreation_DevaitRetournerDateValide() {
+        // Given
+        let dateString = "2024-01-15T08:30:00Z"
+        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateString)
+        
+        // When
+        let date = client.dateCreation
+        
+        // Then
+        XCTAssertNotNil(date)
+        XCTAssertEqual(date.getYear(), 2024)
+        XCTAssertEqual(date.getMonth(), 1)
+        XCTAssertEqual(date.getDay(), 15)
+    }
+    
+    func test_dateCreation_AvecDateInvalide_DevaitRetournerDateActuelle() {
+        // Given
+        let dateInvalide = "date invalide"
+        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateInvalide)
+        
+        // When
+        let date = client.dateCreation
+        
+        // Then
+        let maintenant = Date.now
+        XCTAssertEqual(date.getYear(), maintenant.getYear())
+        XCTAssertEqual(date.getMonth(), maintenant.getMonth())
+        XCTAssertEqual(date.getDay(), maintenant.getDay())
+    }
+    
+    func test_formatDateVersString_DevaitRetournerFormatCorrect() {
+        // Given
+        let dateString = "2024-01-15T08:30:00Z"
+        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateString)
+        
+        // When
+        let dateFormatee = client.formatDateVersString()
+        
+        // Then
+        XCTAssertEqual(dateFormatee, "15-01-2024")
+    }
+    
+    func test_formatDateVersString_AvecDateInvalide_DevaitRetournerDateActuelle() {
+        // Given
+        let dateInvalide = "date invalide"
+        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateInvalide)
+        
+        // When
+        let dateFormatee = client.formatDateVersString()
+        
+        // Then
+        let maintenant = Date.now
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let datePrevue = dateFormatter.string(from: maintenant)
+        
+        XCTAssertEqual(dateFormatee, datePrevue,
+                       "Pour une date invalide, devrait retourner la date actuelle formatée")
     }
 }

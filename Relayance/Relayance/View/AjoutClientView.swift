@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AjoutClientView: View {
+    @EnvironmentObject private var viewModel: ClientViewModel
     @Binding var dismissModal: Bool
     @State var nom: String = ""
     @State var email: String = ""
@@ -23,9 +24,18 @@ struct AjoutClientView: View {
                 .font(.title2)
             TextField("Email", text: $email)
                 .font(.title2)
+            
+            if let error = viewModel.errorMessage {
+                Text(error)
+                    .foregroundColor(.red)
+                    .padding()
+            }
+            
             Button("Ajouter") {
-                //Ajout d'un client
-                dismissModal.toggle()
+                if viewModel.addClient(nom: nom, email: email) {
+                    dismissModal.toggle()
+                }
+                
             }
             .padding(.horizontal, 50)
             .padding(.vertical)
@@ -34,6 +44,8 @@ struct AjoutClientView: View {
             .background(RoundedRectangle(cornerRadius: 10).fill(.orange))
             .foregroundStyle(.white)
             .padding(.top, 50)
+            .disabled(!viewModel.isFormValid(nom: nom, email: email))
+            
             Spacer()
         }
         .padding()

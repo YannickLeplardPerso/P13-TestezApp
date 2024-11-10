@@ -8,19 +8,36 @@
 import SwiftUI
 
 struct ListClientsView: View {
-    @State var clientsList: [Client] = ModelData.chargement("Source.json")
+    @EnvironmentObject private var viewModel: ClientViewModel
     @State private var showModal: Bool = false
     
     var body: some View {
         NavigationStack {
-            List(clientsList, id: \.self) { client in
-                NavigationLink {
-                    DetailClientView(client: client)
-                } label: {
-                    Text(client.nom)
-                        .font(.title3)
+            Group {
+                if viewModel.clients.isEmpty {
+                    Text("Aucun client")
+                        .font(.title2)
+                        .foregroundColor(.gray)
+                } else {
+                    List(viewModel.clients, id: \.self) { client in
+                        NavigationLink {
+                            DetailClientView(client: client)
+                        } label: {
+                            Text(client.nom)
+                                .font(.title3)
+                        }
+                    }
                 }
             }
+//            List(viewModel.clients, id: \.self) { client in
+//                NavigationLink {
+//                    DetailClientView(client: client)
+//                        .environmentObject(viewModel)
+//                } label: {
+//                    Text(client.nom)
+//                        .font(.title3)
+//                }
+//            }
             .navigationTitle("Liste des clients")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

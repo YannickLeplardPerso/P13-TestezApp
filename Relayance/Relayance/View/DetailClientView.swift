@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailClientView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject private var viewModel: ClientViewModel
     var client: Client
     
     var body: some View {
@@ -26,13 +27,22 @@ struct DetailClientView: View {
                 .font(.title3)
             Text(client.formatDateVersString())
                 .font(.title3)
+            
+            if viewModel.isNewClient(client) {
+                Text("Nouveau client")
+                    .foregroundStyle(.green)
+                    .font(.caption)
+                    .padding(.top, 5)
+            }
+            
             Spacer()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Supprimer") {
-                    // suppression
-                    self.presentationMode.wrappedValue.dismiss()
+                    if viewModel.deleteClient(client) {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }
                 .foregroundStyle(.red)
                 .bold()
