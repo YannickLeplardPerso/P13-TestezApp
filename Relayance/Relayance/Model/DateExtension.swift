@@ -9,7 +9,7 @@ import Foundation
 
 extension Date {
     // pour tests
-    static var customFormatter: DateFormatter?
+//    static var customFormatter: DateFormatter?
     
     static func dateFromString(_ isoString: String) -> Date? {
         let isoDateFormatter = ISO8601DateFormatter()
@@ -18,17 +18,12 @@ extension Date {
         return isoDateFormatter.date(from: isoString)
     }
     
-    static func stringFromDate(_ date: Date) -> String? {
-        // pour tests
-        if let customFormatter = customFormatter {
-            let result = customFormatter.string(from: date)
-            return result.isEmpty ? nil : result
-        }
-        
+    static func stringFromDate(_ date: Date, isoDateDFormatter: String) -> String? {
         let isoDateFormatter = DateFormatter()
-        isoDateFormatter.dateFormat = "dd-MM-yyyy"
+        isoDateFormatter.dateFormat = isoDateDFormatter
         
-        return isoDateFormatter.string(from: date)
+        let result = isoDateFormatter.string(from: date)
+        return result.isEmpty ? nil : result
     }
     
     func getDay() -> Int {

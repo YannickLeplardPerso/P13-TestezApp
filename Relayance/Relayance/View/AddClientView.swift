@@ -1,5 +1,5 @@
 //
-//  AjoutClientView.swift
+//  AddClientView.swift
 //  Relayance
 //
 //  Created by Amandine Cousin on 10/07/2024.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct AjoutClientView: View {
+struct AddClientView: View {
     @EnvironmentObject private var viewModel: ClientViewModel
     @Binding var dismissModal: Bool
-    @State var nom: String = ""
+    @State var name: String = ""
     @State var email: String = ""
     
     var body: some View {
@@ -20,7 +20,7 @@ struct AjoutClientView: View {
                 .bold()
                 .multilineTextAlignment(.center)
             Spacer()
-            TextField("Nom", text: $nom)
+            TextField("Nom", text: $name)
                 .font(.title2)
             TextField("Email", text: $email)
                 .font(.title2)
@@ -32,7 +32,7 @@ struct AjoutClientView: View {
             }
             
             Button("Ajouter") {
-                if viewModel.addClient(nom: nom, email: email) {
+                if viewModel.addClient(name: name, email: email) {
                     dismissModal.toggle()
                 }
                 
@@ -44,7 +44,7 @@ struct AjoutClientView: View {
             .background(RoundedRectangle(cornerRadius: 10).fill(.orange))
             .foregroundStyle(.white)
             .padding(.top, 50)
-            .disabled(!viewModel.isFormValid(nom: nom, email: email))
+            .disabled(!viewModel.isFormValid(name: name, email: email))
             
             Spacer()
         }
@@ -53,5 +53,5 @@ struct AjoutClientView: View {
 }
 
 #Preview {
-    AjoutClientView(dismissModal: .constant(false))
+    AddClientView(dismissModal: .constant(false))
 }

@@ -29,15 +29,6 @@ struct ListClientsView: View {
                     }
                 }
             }
-//            List(viewModel.clients, id: \.self) { client in
-//                NavigationLink {
-//                    DetailClientView(client: client)
-//                        .environmentObject(viewModel)
-//                } label: {
-//                    Text(client.nom)
-//                        .font(.title3)
-//                }
-//            }
             .navigationTitle("Liste des clients")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -49,7 +40,7 @@ struct ListClientsView: View {
                 }
             }
             .sheet(isPresented: $showModal, content: {
-                AjoutClientView(dismissModal: $showModal)
+                AddClientView(dismissModal: $showModal)
             })
         }
     }

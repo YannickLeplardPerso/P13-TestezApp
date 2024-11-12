@@ -12,6 +12,7 @@ import SwiftUI
 
 class ClientViewModel: ObservableObject {
     @Published private(set) var clients: [Client] = []
+    // For future use
     @Published private(set) var errorMessage: String?
     
     init() {
@@ -19,7 +20,7 @@ class ClientViewModel: ObservableObject {
     }
     
     private func loadClients() {
-        clients = ModelData.chargement("Source.json")
+        clients = ModelData.load("Source.json")
     }
     
     private func isValidEmail(_ email: String) -> Bool {
@@ -28,46 +29,35 @@ class ClientViewModel: ObservableObject {
         return emailPredicate.evaluate(with: email)
     }
     
-    func addClient(nom: String, email: String) -> Bool {
-        // Validation des champs
-        guard !nom.isEmpty && !email.isEmpty else {
+    func addClient(name: String, email: String) -> Bool {
+        guard !name.isEmpty && !email.isEmpty else {
             errorMessage = "Les champs nom et email sont requis"
             return false
         }
         
-        // Validation du format email
         guard isValidEmail(email) else {
             errorMessage = "Format d'email invalide"
             return false
         }
         
-        let newClient = Client.creerNouveauClient(nom: nom, email: email)
+        let newClient = Client.createClient(name: name, email: email)
         
-        // Vérification si le client existe déjà
-        guard !newClient.clientExiste(clientsList: clients) else {
+        guard !newClient.clientExists(in: clients) else {
             errorMessage = "Ce client existe déjà"
             return false
         }
         
-        // Ajout du client
         clients.append(newClient)
         errorMessage = nil
         return true
     }
     
-//    func addClient(nom: String, email: String) {
-//        let newClient = Client.creerNouveauClient(nom: nom, email: email)
-//        if !newClient.clientExiste(clientsList: clients) {
-//            clients.append(newClient)
-//        }
-//    }
-    
     func isNewClient(_ client: Client) -> Bool {
-        return client.estNouveauClient()
+        return client.isNew()
     }
     
     func getFormattedDate(for client: Client) -> String {
-        return client.formatDateVersString()
+        return client.formatDateToString()
     }
     
     func deleteClient(_ client: Client) -> Bool {
@@ -80,15 +70,8 @@ class ClientViewModel: ObservableObject {
         errorMessage = nil
         return true
     }
-//    func deleteClient(at indexSet: IndexSet) {
-//        clients.remove(atOffsets: indexSet)
-//    }
     
-    func isFormValid(nom: String, email: String) -> Bool {
-        return !nom.isEmpty && !email.isEmpty && isValidEmail(email)
+    func isFormValid(name: String, email: String) -> Bool {
+        return !name.isEmpty && !email.isEmpty && isValidEmail(email)
     }
-    
-//    func moveClient(from source: IndexSet, to destination: Int) {
-//        clients.move(fromOffsets: source, toOffset: destination)
-//    }
 }

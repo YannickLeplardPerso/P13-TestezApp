@@ -12,20 +12,10 @@ import XCTest
 
 final class ModelTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        Date.customFormatter = nil
-    }
-    
-    override func tearDown() {
-        Date.customFormatter = nil
-        super.tearDown()
-    }
-    
     func test_dateCreation_DevaitRetournerDateValide() {
         // Given
         let dateString = "2024-01-15T08:30:00Z"
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateString)
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: dateString)
         
         // When
         let date = client.dateCreation
@@ -39,63 +29,58 @@ final class ModelTests: XCTestCase {
     
     func test_dateCreation_AvecDateInvalide_DevaitRetournerDateActuelle() {
         // Given
-        let dateInvalide = "date invalide"
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateInvalide)
+        let invalidDate = "date invalide"
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: invalidDate)
         
         // When
         let date = client.dateCreation
         
         // Then
-        let maintenant = Date.now
-        XCTAssertEqual(date.getYear(), maintenant.getYear())
-        XCTAssertEqual(date.getMonth(), maintenant.getMonth())
-        XCTAssertEqual(date.getDay(), maintenant.getDay())
+        let now = Date.now
+        XCTAssertEqual(date.getYear(), now.getYear())
+        XCTAssertEqual(date.getMonth(), now.getMonth())
+        XCTAssertEqual(date.getDay(), now.getDay())
     }
         
     func test_formatDateVersString_DevaitRetournerFormatCorrect() {
         // Given
         let dateString = "2024-01-15T08:30:00Z"
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateString)
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: dateString)
         
         // When
-        let dateFormatee = client.formatDateVersString()
+        let formattedDate = client.formatDateToString()
         
         // Then
-        XCTAssertEqual(dateFormatee, "15-01-2024")
+        XCTAssertEqual(formattedDate, "15-01-2024")
     }
     
     func test_formatDateVersString_AvecDateInvalide_DevaitRetournerDateActuelle() {
         // Given
-        let dateInvalide = "date invalide"
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateInvalide)
+        let invalidDate = "date invalide"
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: invalidDate)
         
         // When
-        let dateFormatee = client.formatDateVersString()
+        let formattedDate = client.formatDateToString()
         
         // Then
-        let maintenant = Date.now
+        let now = Date.now
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        let datePrevue = dateFormatter.string(from: maintenant)
+        let expectedDate = dateFormatter.string(from: now)
         
-        XCTAssertEqual(dateFormatee, datePrevue)
+        XCTAssertEqual(formattedDate, expectedDate)
     }
     
     func test_formatDateVersString_AvecFormattageDeDateEchoue_DevaitRetournerDateString() {
         // Given
         let dateString = "2024-01-15T08:30:00Z"
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateString)
-        
-        // Force l'échec du formatage en utilisant un formatter qui retournera nil
-        let failingFormatter = DateFormatter()
-        failingFormatter.dateFormat = "" // Format invalide qui forcera l'échec
-        Date.customFormatter = failingFormatter
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: dateString)
         
         // When
-        let resultat = client.formatDateVersString()
+        let result = client.formatDateToString(isoDateDFormatter: "")
         
         // Then
-        XCTAssertEqual(resultat, client.getDateCreationString())
+        XCTAssertEqual(result, client.creationDateString())
     }
     
     func test_estNouveauClient_AvecClientCreeAujourdhui_DevaitRetournerTrue() {
@@ -103,38 +88,38 @@ final class ModelTests: XCTestCase {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         let dateString = formatter.string(from: Date.now)
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateString)
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: dateString)
         
         // When
-        let estNouveau = client.estNouveauClient()
+        let isNew = client.isNew()
         
         // Then
-        XCTAssertTrue(estNouveau)
+        XCTAssertTrue(isNew)
     }
     
     func test_estNouveauClient_AvecClientCreeHier_DevaitRetournerFalse() {
         // Given
-        let hier = Calendar.current.date(byAdding: .day, value: -1, to: Date.now)!
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date.now)!
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        let dateString = formatter.string(from: hier)
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateString)
+        let dateString = formatter.string(from: yesterday)
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: dateString)
         
         // When
-        let estNouveau = client.estNouveauClient()
+        let isNew = client.isNew()
         
         // Then
-        XCTAssertFalse(estNouveau)
+        XCTAssertFalse(isNew)
     }
     
     func test_estNouveauClient_AvecDateInvalide_DevaitRetournerTrue() {
         // Given
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: "date invalide")
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: "date invalide")
         
         // When
-        let estNouveau = client.estNouveauClient()
+        let isNew = client.isNew()
         
         // Then
-        XCTAssertTrue(estNouveau) // Car une date invalide renvoie Date.now
+        XCTAssertTrue(isNew) // Car une date invalide renvoie Date.now
     }
 }

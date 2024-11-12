@@ -22,173 +22,167 @@ final class ClientViewModelTests: XCTestCase {
         viewModel = nil
         super.tearDown()
     }
-    
-    // MARK: - Tests d'ajout de client
-    
+        
     func test_ajoutClientValide_DevaitReussir() {
         // Given
-        let nombreClientsInitial = viewModel.clients.count
-        let nom = "Jean Dupont"
+        let initialNumberOfClients: Int = viewModel.clients.count
+        let name = "Jean Dupont"
         let email = "jean.dupont@example.com"
         
         // When
-        let resultat = viewModel.addClient(nom: nom, email: email)
+        let result = viewModel.addClient(name: name, email: email)
         
         // Then
-        XCTAssertTrue(resultat)
-        XCTAssertEqual(viewModel.clients.count, nombreClientsInitial + 1)
-        XCTAssertTrue(viewModel.clients.contains { $0.nom == nom && $0.email == email })
+        XCTAssertTrue(result)
+        XCTAssertEqual(viewModel.clients.count, initialNumberOfClients + 1)
+        XCTAssertTrue(viewModel.clients.contains { $0.nom == name && $0.email == email })
         XCTAssertNil(viewModel.errorMessage)
-        if let nouveauClient = viewModel.clients.first(where: { $0.nom == nom }) {
-            XCTAssertTrue(viewModel.isNewClient(nouveauClient))
+        if let newClient = viewModel.clients.first(where: { $0.nom == name }) {
+            XCTAssertTrue(viewModel.isNewClient(newClient))
         }
     }
     
     func test_ajoutClientExistant_DevaitEchouer() {
         // Given
-        let clientExistant = viewModel.clients[0]
-        let nombreClientsInitial = viewModel.clients.count
+        let existingClient = viewModel.clients[0]
+        let initialNumberOfClients = viewModel.clients.count
         
         // When
-        let resultat = viewModel.addClient(nom: "Nouveau Nom", email: clientExistant.email)
+        let result = viewModel.addClient(name: "Nouveau Nom", email: existingClient.email)
         
         // Then
-        XCTAssertFalse(resultat)
-        XCTAssertEqual(viewModel.clients.count, nombreClientsInitial)
+        XCTAssertFalse(result)
+        XCTAssertEqual(viewModel.clients.count, initialNumberOfClients)
         XCTAssertEqual(viewModel.errorMessage, "Ce client existe déjà")
     }
     
     func test_ajoutClientEmailInvalide_DevaitEchouer() {
         // Given
-        let nombreClientsInitial = viewModel.clients.count
-        let nom = "Marie Martin"
+        let initialNumberOfClients = viewModel.clients.count
+        let name = "Marie Martin"
         let email = "marie.martin"
         
         // When
-        let resultat = viewModel.addClient(nom: nom, email: email)
+        let result = viewModel.addClient(name: name, email: email)
         
         // Then
-        XCTAssertFalse(resultat)
-        XCTAssertEqual(viewModel.clients.count, nombreClientsInitial)
+        XCTAssertFalse(result)
+        XCTAssertEqual(viewModel.clients.count, initialNumberOfClients)
         XCTAssertEqual(viewModel.errorMessage, "Format d'email invalide")
     }
     
     func test_ajoutClientChampsVides_DevaitEchouer() {
         // Given
-        let nombreClientsInitial = viewModel.clients.count
+        let initialNumberOfClients = viewModel.clients.count
         
         // When
-        let resultat = viewModel.addClient(nom: "", email: "")
+        let result = viewModel.addClient(name: "", email: "")
         
         // Then
-        XCTAssertFalse(resultat)
-        XCTAssertEqual(viewModel.clients.count, nombreClientsInitial)
+        XCTAssertFalse(result)
+        XCTAssertEqual(viewModel.clients.count, initialNumberOfClients)
         XCTAssertEqual(viewModel.errorMessage, "Les champs nom et email sont requis")
     }
-    
-    // MARK: - Tests de suppression de client
-    
+        
     func test_suppressionClientExistant_DevaitReussir() {
         // Given
-        let nombreClientsInitial = viewModel.clients.count
-        let clientASupprimer = viewModel.clients[0]
+        let initialNumberOfClients = viewModel.clients.count
+        let clientToDelete = viewModel.clients[0]
         
         // When
-        let resultat = viewModel.deleteClient(clientASupprimer)
+        let result = viewModel.deleteClient(clientToDelete)
         
         // Then
-        XCTAssertTrue(resultat)
-        XCTAssertEqual(viewModel.clients.count, nombreClientsInitial - 1)
-        XCTAssertFalse(viewModel.clients.contains(clientASupprimer))
+        XCTAssertTrue(result)
+        XCTAssertEqual(viewModel.clients.count, initialNumberOfClients - 1)
+        XCTAssertFalse(viewModel.clients.contains(clientToDelete))
         XCTAssertNil(viewModel.errorMessage)
     }
     
     func test_suppressionClientInexistant_DevaitEchouer() {
         // Given
-        let nombreClientsInitial = viewModel.clients.count
-        let clientInexistant = Client(nom: "Inexistant",
+        let initialNumberOfClients = viewModel.clients.count
+        let nonExistentClient = Client(name: "Inexistant",
                                       email: "inexistant@test.com",
                                       dateCreationString: "2024-01-01T00:00:00Z")
         
         // When
-        let resultat = viewModel.deleteClient(clientInexistant)
+        let result = viewModel.deleteClient(nonExistentClient)
         
         // Then
-        XCTAssertFalse(resultat)
-        XCTAssertEqual(viewModel.clients.count, nombreClientsInitial)
+        XCTAssertFalse(result)
+        XCTAssertEqual(viewModel.clients.count, initialNumberOfClients)
         XCTAssertEqual(viewModel.errorMessage, "Client non trouvé")
     }
-    
-    // MARK: - Tests de formatage de date
-    
+        
     func test_getFormattedDate_DevaitRetournerDateFormatee() {
         // Given
         let dateString = "2024-01-15T08:30:00Z"
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: dateString)
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: dateString)
         
         // When
-        let dateFormatee = viewModel.getFormattedDate(for: client)
+        let formattedDate = viewModel.getFormattedDate(for: client)
         
         // Then
-        XCTAssertEqual(dateFormatee, "15-01-2024")
+        XCTAssertEqual(formattedDate, "15-01-2024")
     }
     
     func test_getFormattedDate_AvecDateInvalide_DevaitRetournerDateActuelle() {
         // Given
-        let client = Client(nom: "Test", email: "test@example.com", dateCreationString: "date invalide")
+        let client = Client(name: "Test", email: "test@example.com", dateCreationString: "date invalide")
         
         // When
-        let dateFormatee = viewModel.getFormattedDate(for: client)
+        let formattedDate = viewModel.getFormattedDate(for: client)
         
         // Then
-        let maintenant = Date.now
+        let now = Date.now
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        let datePrevue = dateFormatter.string(from: maintenant)
+        let expectedDate = dateFormatter.string(from: now)
         
-        XCTAssertEqual(dateFormatee, datePrevue)
+        XCTAssertEqual(formattedDate, expectedDate)
     }
     
     func test_isFormValid_AvecDonneesValides_DevaitRetournerTrue() {
         // Given
-        let nom = "Test User"
+        let name = "Test User"
         let email = "test@example.com"
         
         // When
-        let estValide = viewModel.isFormValid(nom: nom, email: email)
+        let isValid = viewModel.isFormValid(name: name, email: email)
         
         // Then
-        XCTAssertTrue(estValide)
+        XCTAssertTrue(isValid)
     }
     
     func test_isFormValid_AvecNomVide_DevaitRetournerFalse() {
         // Given
-        let nom = ""
+        let name = ""
         let email = "test@example.com"
         
         // When
-        let estValide = viewModel.isFormValid(nom: nom, email: email)
+        let isValid = viewModel.isFormValid(name: name, email: email)
         
         // Then
-        XCTAssertFalse(estValide)
+        XCTAssertFalse(isValid)
     }
     
     func test_isFormValid_AvecEmailVide_DevaitRetournerFalse() {
         // Given
-        let nom = "Test User"
+        let name = "Test User"
         let email = ""
         
         // When
-        let estValide = viewModel.isFormValid(nom: nom, email: email)
+        let isValid = viewModel.isFormValid(name: name, email: email)
         
         // Then
-        XCTAssertFalse(estValide)
+        XCTAssertFalse(isValid)
     }
     
     func test_isFormValid_AvecEmailInvalide_DevaitRetournerFalse() {
         // Given
-        let nom = "Test User"
-        let emailsInvalides = [
+        let name = "Test User"
+        let invalidEmails = [
             "test@",
             "@example.com",
             "test@example",
@@ -198,8 +192,8 @@ final class ClientViewModelTests: XCTestCase {
         ]
         
         // When & Then
-        emailsInvalides.forEach { email in
-            XCTAssertFalse(viewModel.isFormValid(nom: nom, email: email),
+        invalidEmails.forEach { email in
+            XCTAssertFalse(viewModel.isFormValid(name: name, email: email),
                            "Email '\(email)' devrait être invalide")
         }
     }

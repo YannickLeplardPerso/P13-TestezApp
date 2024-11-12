@@ -18,7 +18,7 @@
 		422740F72C3ECFD600E7522C /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422740F62C3ECFD600E7522C /* ModelData.swift */; };
 		422740F92C3ED02400E7522C /* Source.json in Resources */ = {isa = PBXBuildFile; fileRef = 422740F82C3ED02400E7522C /* Source.json */; };
 		422740FB2C3ED0EE00E7522C /* DetailClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422740FA2C3ED0EE00E7522C /* DetailClientView.swift */; };
-		422740FD2C3ED18D00E7522C /* AjoutClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422740FC2C3ED18D00E7522C /* AjoutClientView.swift */; };
+		422740FD2C3ED18D00E7522C /* AddClientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422740FC2C3ED18D00E7522C /* AddClientView.swift */; };
 		AC140A3F2CDE089D00B7F4EB /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC140A3E2CDE089D00B7F4EB /* ModelTests.swift */; };
 		AC67B1382CE0E63A00793803 /* ClientViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC67B1372CE0E63A00793803 /* ClientViewModel.swift */; };
 		AC67B13C2CE0F1E300793803 /* ClientViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC67B13B2CE0F1E300793803 /* ClientViewModelTests.swift */; };
@@ -56,7 +56,7 @@
 		422740F62C3ECFD600E7522C /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		422740F82C3ED02400E7522C /* Source.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Source.json; sourceTree = "<group>"; };
 		422740FA2C3ED0EE00E7522C /* DetailClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailClientView.swift; sourceTree = "<group>"; };
-		422740FC2C3ED18D00E7522C /* AjoutClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AjoutClientView.swift; sourceTree = "<group>"; };
+		422740FC2C3ED18D00E7522C /* AddClientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClientView.swift; sourceTree = "<group>"; };
 		AC140A3E2CDE089D00B7F4EB /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		AC67B1372CE0E63A00793803 /* ClientViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewModel.swift; sourceTree = "<group>"; };
 		AC67B13B2CE0F1E300793803 /* ClientViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientViewModelTests.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 		AC140A412CDE09F400B7F4EB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				422740FC2C3ED18D00E7522C /* AjoutClientView.swift */,
+				422740FC2C3ED18D00E7522C /* AddClientView.swift */,
 				422740FA2C3ED0EE00E7522C /* DetailClientView.swift */,
 				422740F42C3ECFCA00E7522C /* ListClientsView.swift */,
 			);
@@ -311,7 +311,7 @@
 				422740FB2C3ED0EE00E7522C /* DetailClientView.swift in Sources */,
 				AC67B1382CE0E63A00793803 /* ClientViewModel.swift in Sources */,
 				422740EF2C3ECD1500E7522C /* DateExtension.swift in Sources */,
-				422740FD2C3ED18D00E7522C /* AjoutClientView.swift in Sources */,
+				422740FD2C3ED18D00E7522C /* AddClientView.swift in Sources */,
 				422740712C3BF4DC00E7522C /* RelayanceApp.swift in Sources */,
 				422740F72C3ECFD600E7522C /* ModelData.swift in Sources */,
 			);

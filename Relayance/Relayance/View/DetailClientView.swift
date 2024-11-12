@@ -25,7 +25,7 @@ struct DetailClientView: View {
                 .padding()
             Text(client.email)
                 .font(.title3)
-            Text(client.formatDateVersString())
+            Text(client.formatDateToString())
                 .font(.title3)
             
             if viewModel.isNewClient(client) {
@@ -52,5 +52,5 @@ struct DetailClientView: View {
 }
 
 #Preview {
-    DetailClientView(client: Client(nom: "Tata", email: "tata@email", dateCreationString: "20:32 Wed, 30 Oct 2019"))
+    DetailClientView(client: Client(name: "Tata", email: "tata@email", dateCreationString: "20:32 Wed, 30 Oct 2019"))
 }

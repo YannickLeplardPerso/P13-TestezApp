@@ -21,25 +21,25 @@ struct Client: Codable, Hashable {
         case dateCreationString = "date_creation"
     }
 
-    // pour les tests
-    func getDateCreationString() -> String {
+    // for tests
+    func creationDateString() -> String {
         return dateCreationString
     }
 
-    init(nom: String, email: String, dateCreationString: String) {
-        self.nom = nom
+    init(name: String, email: String, dateCreationString: String) {
+        self.nom = name
         self.email = email
         self.dateCreationString = dateCreationString
     }
     
-    static func creerNouveauClient(nom: String, email: String) -> Client {
+    static func createClient(name: String, email: String) -> Client {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         
-        return Client(nom: nom, email: email, dateCreationString: dateFormatter.string(from: Date.now))
+        return Client(name: name, email: email, dateCreationString: dateFormatter.string(from: Date.now))
     }
     
-    func estNouveauClient() -> Bool {
+    func isNew() -> Bool {
         let aujourdhui = Date.now
         let dateCreation = self.dateCreation
         
@@ -51,16 +51,14 @@ struct Client: Codable, Hashable {
         return true
     }
     
-    // On considère qu'un client existe s'il a le même email car l'email est généralement unique dans un système CRM
-    func clientExiste(clientsList: [Client]) -> Bool {
-        return clientsList.contains { $0.email.lowercased() == self.email.lowercased() }
+    func clientExists(in clients: [Client]) -> Bool {
+        return clients.contains { $0.email.lowercased() == self.email.lowercased() }
     }
-    // Pour garantir que le Hashable fonctionne correctement avec la comparaison
     func hash(into hasher: inout Hasher) {
         hasher.combine(email.lowercased())
     }
     
-    func formatDateVersString() -> String {
-        return Date.stringFromDate(self.dateCreation) ?? self.dateCreationString
+    func formatDateToString(isoDateDFormatter: String = "dd-MM-yyyy") -> String {
+        return Date.stringFromDate(self.dateCreation, isoDateDFormatter: isoDateDFormatter) ?? self.dateCreationString
     }
 }
