@@ -42,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2AB32FCD2CE4DA7D006DE711 /* Relayance.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Relayance.xctestplan; sourceTree = "<group>"; };
 		4227406D2C3BF4DC00E7522C /* Relayance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Relayance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		422740702C3BF4DC00E7522C /* RelayanceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayanceApp.swift; sourceTree = "<group>"; };
 		422740742C3BF4DD00E7522C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -90,6 +91,7 @@
 		422740642C3BF4DC00E7522C = {
 			isa = PBXGroup;
 			children = (
+				2AB32FCD2CE4DA7D006DE711 /* Relayance.xctestplan */,
 				422740702C3BF4DC00E7522C /* RelayanceApp.swift */,
 				4227406F2C3BF4DC00E7522C /* Relayance */,
 				422740802C3BF4DD00E7522C /* RelayanceTests */,
@@ -476,7 +478,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Relayance/Preview Content\"";
 				DEVELOPMENT_TEAM = 6FH7WNJPHQ;
 				ENABLE_PREVIEWS = YES;
@@ -506,7 +508,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Relayance/Preview Content\"";
 				DEVELOPMENT_TEAM = 6FH7WNJPHQ;
 				ENABLE_PREVIEWS = YES;

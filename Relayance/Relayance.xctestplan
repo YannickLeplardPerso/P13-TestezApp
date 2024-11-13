@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "748FFACD-B7B0-4B87-8941-FC21025D185F",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Relayance.xcodeproj",
+      "identifier" : "4227406C2C3BF4DC00E7522C",
+      "name" : "Relayance"
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Relayance.xcodeproj",
+        "identifier" : "4227407C2C3BF4DD00E7522C",
+        "name" : "RelayanceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Relayance.xcodeproj",
+        "identifier" : "422740862C3BF4DD00E7522C",
+        "name" : "RelayanceUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
